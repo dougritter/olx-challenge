@@ -63,9 +63,7 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
         for(Ad item : adsList) {
             Marker marker = mMap.addMarker(mViewModel.convertAdIntoMarker(item));
             marker.setTag(item.getId());
-
         }
-
     }
 
     @Override protected void subscribeForNetworkRequests() {
