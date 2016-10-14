@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 
 import com.ritterdouglas.olxchallenge.R;
 import com.ritterdouglas.olxchallenge.databinding.CardItemBinding;
+import com.ritterdouglas.olxchallenge.networking.ads_search.model.Ad;
+import com.ritterdouglas.olxchallenge.networking.ads_search.model.SearchResponse;
 
 import java.util.List;
 
 public class OlxListAdapter extends RecyclerView.Adapter<OlxListAdapter.CustomViewHolder> {
-    private List<Object> mDataset;
+    private List<Ad> adsList;
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         private CardItemBinding mViewDataBinding;
@@ -29,8 +31,10 @@ public class OlxListAdapter extends RecyclerView.Adapter<OlxListAdapter.CustomVi
 
     }
 
-    public OlxListAdapter(java.util.List<Object> myDataset) {
-        this.mDataset = myDataset;
+    public OlxListAdapter(SearchResponse searchResponse) {
+        if (searchResponse.getAds() != null) {
+            this.adsList = searchResponse.getAds();
+        }
     }
 
     @Override public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -46,6 +50,6 @@ public class OlxListAdapter extends RecyclerView.Adapter<OlxListAdapter.CustomVi
     }
 
     @Override public int getItemCount() {
-        return mDataset.size();
+        return adsList.size();
     }
 }

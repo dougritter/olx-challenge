@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ritterdouglas.olxchallenge.networking.ads_search.model.Ad" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="@dimen/card_default_margin"
+        card_view:cardCornerRadius="4dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/detailImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_height" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@id/detailImage"
+                android:background="#30FFFFFF" />
+
+            <TextView
+                android:id="@+id/detailPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/detailImage"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/card_default_margin"
+                android:textColor="@android:color/background_dark"
+                android:textSize="@dimen/card_text_name_size"
+                android:text="@{viewModel.priceNumeric}"
+                tools:text="Item Price" />
+
+            <TextView
+                android:id="@+id/detailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/detailImage"
+                android:layout_margin="@dimen/card_default_margin"
+                android:textColor="@android:color/background_dark"
+                android:textSize="@dimen/card_text_name_size"
+                android:text="@{viewModel.title}"
+                tools:text="Item Title" />
+
+        </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+
+</layout>
+
+
+

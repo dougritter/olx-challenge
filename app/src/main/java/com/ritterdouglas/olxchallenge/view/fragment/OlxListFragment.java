@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 
 import com.ritterdouglas.olxchallenge.R;
 import com.ritterdouglas.olxchallenge.adapter.OlxListAdapter;
+import com.ritterdouglas.olxchallenge.adapter.SectionsPagerAdapter;
 import com.ritterdouglas.olxchallenge.databinding.FragmentOlxListBinding;
+import com.ritterdouglas.olxchallenge.networking.ads_search.model.SearchResponse;
 import com.ritterdouglas.olxchallenge.view_model.FragmentListViewModel;
 
 import java.util.ArrayList;
@@ -22,32 +24,34 @@ public class OlxListFragment extends Fragment {
     public static final String POSITION = "position";
 
     private FragmentListViewModel mViewModel;
+    private SearchResponse mSearchResponse;
+
     public OlxListFragment() {}
 
-    public static Fragment newInstance(int position) {
+    public static Fragment newInstance(SearchResponse searchResponse) {
         OlxListFragment fragment = new OlxListFragment();
         Bundle args = new Bundle();
-        args.putInt(POSITION, position);
-//        args.putParcelable(DETAILS, data);
+        args.putParcelable(SectionsPagerAdapter.SEARCH_RESPONSE, searchResponse);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int position = getArguments().getInt(POSITION, 0);
-//        DetailsLeanData data = getArguments().getParcelable(DETAILS);
-//        mViewModel = new FragmentDetailViewModel(data);
+        if (getArguments() != null) {
+            mSearchResponse = getArguments().getParcelable(SectionsPagerAdapter.SEARCH_RESPONSE);
+        }
 
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentOlxListBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_olx_list, container, false);
-//        mBinding.setViewModel(mViewModel);
 
-        List<String> list = new ArrayList<>();
-
+        if (mSearchResponse != null) {
+            OlxListAdapter adapter = new OlxListAdapter(mSearchResponse);
 //        mBinding.recyclerView.setAdapter(new OlxListAdapter(list));
+
+        }
 
         return mBinding.getRoot();
 

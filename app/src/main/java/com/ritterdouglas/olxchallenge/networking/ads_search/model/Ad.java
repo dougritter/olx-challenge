@@ -1,15 +1,18 @@
 
 package com.ritterdouglas.olxchallenge.networking.ads_search.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
-@Generated("net.hexar.json2pojo")
-@SuppressWarnings("unused")
-public class Ad {
+import io.realm.RealmObject;
+
+public class Ad implements Parcelable {
 
     @SerializedName("accurate_location")
     private Long mAccurateLocation;
@@ -498,4 +501,121 @@ public class Ad {
         mUserLabel = user_label;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.mAccurateLocation);
+        dest.writeValue(this.mAge);
+        dest.writeValue(this.mBusiness);
+        dest.writeValue(this.mCategoryId);
+        dest.writeValue(this.mChatOptions);
+        dest.writeString(this.mCityId);
+        dest.writeString(this.mCityLabel);
+        dest.writeString(this.mCreated);
+        dest.writeString(this.mDescription);
+        dest.writeList(this.mFeatured);
+        dest.writeValue(this.mHasEmail);
+        dest.writeValue(this.mHasPhone);
+        dest.writeString(this.mHeader);
+        dest.writeString(this.mHeaderType);
+        dest.writeValue(this.mHideUserAdsButton);
+        dest.writeValue(this.mHighlighted);
+        dest.writeString(this.mId);
+        dest.writeValue(this.mIsPriceNegotiable);
+        dest.writeString(this.mListLabel);
+        dest.writeString(this.mListLabelAd);
+        dest.writeString(this.mMapLat);
+        dest.writeString(this.mMapLocation);
+        dest.writeString(this.mMapLon);
+        dest.writeValue(this.mMapRadius);
+        dest.writeValue(this.mMapShowDetailed);
+        dest.writeString(this.mMapZoom);
+        dest.writeString(this.mNumericUserId);
+        dest.writeList(this.mParams);
+        dest.writeString(this.mPerson);
+        dest.writeParcelable(this.mPhotos, flags);
+        dest.writeString(this.mPreviewUrl);
+        dest.writeString(this.mPriceNumeric);
+        dest.writeString(this.mPriceType);
+        dest.writeValue(this.mPromotionSection);
+        dest.writeString(this.mRegionId);
+        dest.writeString(this.mStatus);
+        dest.writeString(this.mTitle);
+        dest.writeValue(this.mTopAd);
+        dest.writeValue(this.mUrgent);
+        dest.writeString(this.mUrl);
+        dest.writeString(this.mUserAdsId);
+        dest.writeString(this.mUserAdsUrl);
+        dest.writeString(this.mUserBusinessLogo);
+        dest.writeString(this.mUserId);
+        dest.writeString(this.mUserLabel);
+    }
+
+    public Ad() {}
+
+    protected Ad(Parcel in) {
+        this.mAccurateLocation = (Long) in.readValue(Long.class.getClassLoader());
+        this.mAge = (Long) in.readValue(Long.class.getClassLoader());
+        this.mBusiness = (Long) in.readValue(Long.class.getClassLoader());
+        this.mCategoryId = (Long) in.readValue(Long.class.getClassLoader());
+        this.mChatOptions = (Long) in.readValue(Long.class.getClassLoader());
+        this.mCityId = in.readString();
+        this.mCityLabel = in.readString();
+        this.mCreated = in.readString();
+        this.mDescription = in.readString();
+        this.mFeatured = new ArrayList<Object>();
+        in.readList(this.mFeatured, Object.class.getClassLoader());
+        this.mHasEmail = (Long) in.readValue(Long.class.getClassLoader());
+        this.mHasPhone = (Long) in.readValue(Long.class.getClassLoader());
+        this.mHeader = in.readString();
+        this.mHeaderType = in.readString();
+        this.mHideUserAdsButton = (Long) in.readValue(Long.class.getClassLoader());
+        this.mHighlighted = (Long) in.readValue(Long.class.getClassLoader());
+        this.mId = in.readString();
+        this.mIsPriceNegotiable = (Long) in.readValue(Long.class.getClassLoader());
+        this.mListLabel = in.readString();
+        this.mListLabelAd = in.readString();
+        this.mMapLat = in.readString();
+        this.mMapLocation = in.readString();
+        this.mMapLon = in.readString();
+        this.mMapRadius = (Long) in.readValue(Long.class.getClassLoader());
+        this.mMapShowDetailed = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.mMapZoom = in.readString();
+        this.mNumericUserId = in.readString();
+        this.mParams = new ArrayList<Object>();
+        in.readList(this.mParams, Object.class.getClassLoader());
+        this.mPerson = in.readString();
+        this.mPhotos = in.readParcelable(Photos.class.getClassLoader());
+        this.mPreviewUrl = in.readString();
+        this.mPriceNumeric = in.readString();
+        this.mPriceType = in.readString();
+        this.mPromotionSection = (Long) in.readValue(Long.class.getClassLoader());
+        this.mRegionId = in.readString();
+        this.mStatus = in.readString();
+        this.mTitle = in.readString();
+        this.mTopAd = (Long) in.readValue(Long.class.getClassLoader());
+        this.mUrgent = (Long) in.readValue(Long.class.getClassLoader());
+        this.mUrl = in.readString();
+        this.mUserAdsId = in.readString();
+        this.mUserAdsUrl = in.readString();
+        this.mUserBusinessLogo = in.readString();
+        this.mUserId = in.readString();
+        this.mUserLabel = in.readString();
+    }
+
+    public static final Parcelable.Creator<Ad> CREATOR = new Parcelable.Creator<Ad>() {
+        @Override
+        public Ad createFromParcel(Parcel source) {
+            return new Ad(source);
+        }
+
+        @Override
+        public Ad[] newArray(int size) {
+            return new Ad[size];
+        }
+    };
 }

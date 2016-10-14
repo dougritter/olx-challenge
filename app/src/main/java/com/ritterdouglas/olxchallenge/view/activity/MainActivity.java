@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import rx.Subscriber;
@@ -30,6 +31,7 @@ public class MainActivity extends BaseActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     @Inject Retrofit retrofit;
+    private Realm realm;
 
     private ActivityMainViewModel mViewModel;
     private ActivityMainBinding mBinding;
@@ -40,6 +42,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         ((CustomApplication) getApplication()).getNetComponent().inject(this);
+
+        realm = Realm.getDefaultInstance();
 
         mViewModel = new ActivityMainViewModel(SearchManager.getInstance(this, retrofit));
         mViewModel.search(25);
@@ -83,12 +87,17 @@ public class MainActivity extends BaseActivity {
             adsList = searchResponse.body().getAds();
 //            addMarkersOnTheMap(searchResponse.body().getAds());
 
-            SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+            SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager(), searchResponse.body());
             mBinding.viewPager.setAdapter(adapter);
 //            mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
 
         }
+
     }
 
 
+    @Override protected void onDestroy() {
+        realm.close();
+        super.onDestroy();
+    }
 }
