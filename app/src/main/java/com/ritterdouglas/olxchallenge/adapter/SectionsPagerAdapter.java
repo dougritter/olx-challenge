@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-import com.ritterdouglas.olxchallenge.view.activity.OlxMapFragment;
+import com.ritterdouglas.olxchallenge.view.fragment.OlxMapFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

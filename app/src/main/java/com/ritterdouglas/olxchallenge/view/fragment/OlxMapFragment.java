@@ -1,16 +1,13 @@
-package com.ritterdouglas.olxchallenge.view.activity;
+package com.ritterdouglas.olxchallenge.view.fragment;
 
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,10 +17,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.ritterdouglas.olxchallenge.R;
 import com.ritterdouglas.olxchallenge.databinding.FragmentOlxMapBinding;
-import com.ritterdouglas.olxchallenge.networking.ads_search.SearchManager;
-import com.ritterdouglas.olxchallenge.networking.ads_search.model.Ad;
-import com.ritterdouglas.olxchallenge.view_model.MapsActivityViewModel;
-import com.squareup.picasso.Picasso;
 
 public class OlxMapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     public static final String TAG = OlxMapFragment.class.getSimpleName();
