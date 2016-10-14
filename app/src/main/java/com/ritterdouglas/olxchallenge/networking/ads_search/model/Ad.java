@@ -1,6 +1,8 @@
 
 package com.ritterdouglas.olxchallenge.networking.ads_search.model;
 
+import android.util.Log;
+
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
@@ -272,8 +274,16 @@ public class Ad {
         mListLabelAd = list_label_ad;
     }
 
-    public String getMapLat() {
-        return mMapLat;
+    public double getMapLat() {
+        double returnValue = 0d;
+
+        try {
+            returnValue = Double.parseDouble(mMapLat);
+        } catch (NumberFormatException e) {
+            Log.e(Ad.class.getSimpleName(), e.getMessage());
+        }
+
+        return returnValue;
     }
 
     public void setMapLat(String map_lat) {
@@ -288,8 +298,16 @@ public class Ad {
         mMapLocation = map_location;
     }
 
-    public String getMapLon() {
-        return mMapLon;
+    public double getMapLon() {
+        double returnValue = 0d;
+
+        try {
+            returnValue = Double.parseDouble(mMapLon);
+        } catch (NumberFormatException e) {
+            Log.e(Ad.class.getSimpleName(), e.getMessage());
+        }
+
+        return returnValue;
     }
 
     public void setMapLon(String map_lon) {

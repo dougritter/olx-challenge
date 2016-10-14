@@ -9,22 +9,28 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.ritterdouglas.olxchallenge.R;
 import com.ritterdouglas.olxchallenge.application.CustomApplication;
 import com.ritterdouglas.olxchallenge.networking.ads_search.SearchManager;
+import com.ritterdouglas.olxchallenge.networking.ads_search.model.Ad;
+import com.ritterdouglas.olxchallenge.networking.ads_search.model.SearchResponse;
 import com.ritterdouglas.olxchallenge.view_model.MapsActivityViewModel;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     public static final String TAG = MapsActivity.class.getSimpleName();
+    public static final LatLng LISBON_LAT_LNT = new LatLng(38.730827, -9.137598);
     private GoogleMap mMap;
 
     @Inject Retrofit retrofit;
@@ -49,11 +55,17 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
 
     @Override public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(LISBON_LAT_LNT));
+    }
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    public void addMarkersOnTheMap(List<Ad> adsList) {
+        for(Ad item : adsList) {
+            Marker marker = mMap.addMarker(mViewModel.convertAdIntoMarker(item));
+            marker.setTag(item.getId());
+
+        }
+
     }
 
     @Override protected void subscribeForNetworkRequests() {
@@ -74,7 +86,13 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
                 .subscribe(new SearchSubscriber());
     }
 
-    private class SearchSubscriber extends Subscriber<Object> {
+    @Override public boolean onMarkerClick(Marker marker) {
+        Log.e(TAG, "marker click - id: "+marker.getTag());
+
+        return false;
+    }
+
+    private class SearchSubscriber extends Subscriber<Response<SearchResponse>> {
         @Override public void onCompleted() {
             // hide progress
             Log.e(TAG, "onCompleted - show next activity");
@@ -89,8 +107,9 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
             // test if errors are instanceof exceptions of our API
         }
 
-        @Override public void onNext(Object o) {
+        @Override public void onNext(Response<SearchResponse> searchResponse) {
             Log.e(TAG, "onNext");
+            addMarkersOnTheMap(searchResponse.body().getAds());
 
         }
     }
