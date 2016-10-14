@@ -1,6 +1,6 @@
 package com.ritterdouglas.olxchallenge.di;
 
-import com.ritterdouglas.olxchallenge.MapsActivity;
+import com.ritterdouglas.olxchallenge.view.activity.MapsActivity;
 
 import javax.inject.Singleton;
 
