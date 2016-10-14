@@ -1,7 +1,11 @@
 package com.ritterdouglas.olxchallenge.view.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,6 +41,13 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
 
     private MapsActivityViewModel mViewModel;
     private Subscription searchSubscription;
+    private List<Ad> adsList;
+
+    private RelativeLayout mDetailContainer;
+    private AppCompatImageView mDetailImage;
+    private TextView mDetailPrice;
+    private TextView mDetailTitle;
+    private TextView mDetailDescription;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +56,12 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
+        mDetailContainer = (RelativeLayout) findViewById(R.id.detailsContainer);
+        mDetailImage = (AppCompatImageView) findViewById(R.id.detailImage);
+        mDetailPrice = (TextView) findViewById(R.id.detailPrice);
+        mDetailTitle = (TextView) findViewById(R.id.detailTitle);
+        mDetailDescription = (TextView) findViewById(R.id.detailDescription);
 
         mViewModel = new MapsActivityViewModel(SearchManager.getInstance(this, retrofit));
         mViewModel.search(25);
@@ -86,8 +103,28 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
 
     @Override public boolean onMarkerClick(Marker marker) {
         Log.e(TAG, "marker click - id: "+marker.getTag());
+        showDetails((String) marker.getTag());
 
         return false;
+    }
+
+    public void showDetails(String id) {
+        if (adsList != null) {
+            for(Ad item : adsList) {
+                if (item.getId().equals(id)) {
+                    if (mDetailContainer.getVisibility() != View.VISIBLE) {
+                        mDetailContainer.setVisibility(View.VISIBLE);
+                    }
+
+                    // mDetailImage
+                    mDetailPrice.setText(item.getPriceNumeric());
+                    mDetailTitle.setText(item.getTitle());
+                    mDetailDescription.setText(item.getDescription());
+
+                }
+            }
+        }
+
     }
 
     private class SearchSubscriber extends Subscriber<Response<SearchResponse>> {
@@ -107,6 +144,7 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
 
         @Override public void onNext(Response<SearchResponse> searchResponse) {
             Log.e(TAG, "onNext");
+            adsList = searchResponse.body().getAds();
             addMarkersOnTheMap(searchResponse.body().getAds());
 
         }
