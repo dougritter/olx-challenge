@@ -84,7 +84,7 @@ public class OlxMapFragment extends Fragment implements OnMapReadyCallback, Goog
                     mBinding.detailsContainer.setVisibility(View.VISIBLE);
                 }
 
-                Picasso.with(getContext()).load(mViewModel.getUrlOfImage(item)).into(mBinding.layout.detailImage);
+                Picasso.with(getContext()).load(item.getImageUrl()).into(mBinding.layout.detailImage);
 
                 mBinding.layout.detailPrice.setText(item.getPriceNumeric());
                 mBinding.layout.detailTitle.setText(item.getTitle());

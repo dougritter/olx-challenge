@@ -19,7 +19,7 @@ public class FragmentMapViewModel {
 
     }
 
-    public String getUrlOfImage(Ad ad) {
+    public static String getUrlOfImage(Ad ad) {
         String imageUrl = "";
 
         try {

@@ -109,6 +109,16 @@ public class Ad implements Parcelable {
     @SerializedName("user_label")
     private String mUserLabel;
 
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public Long getAccurateLocation() {
         return mAccurateLocation;
     }
@@ -501,6 +511,8 @@ public class Ad implements Parcelable {
         mUserLabel = user_label;
     }
 
+    public Ad() {}
+
     @Override
     public int describeContents() {
         return 0;
@@ -544,6 +556,7 @@ public class Ad implements Parcelable {
         dest.writeValue(this.mPromotionSection);
         dest.writeString(this.mRegionId);
         dest.writeString(this.mStatus);
+        dest.writeList(this.mSubtitle);
         dest.writeString(this.mTitle);
         dest.writeValue(this.mTopAd);
         dest.writeValue(this.mUrgent);
@@ -553,14 +566,14 @@ public class Ad implements Parcelable {
         dest.writeString(this.mUserBusinessLogo);
         dest.writeString(this.mUserId);
         dest.writeString(this.mUserLabel);
+        dest.writeString(this.imageUrl);
     }
-
-    public Ad() {}
 
     protected Ad(Parcel in) {
         this.mAccurateLocation = (Long) in.readValue(Long.class.getClassLoader());
         this.mAge = (Long) in.readValue(Long.class.getClassLoader());
         this.mBusiness = (Long) in.readValue(Long.class.getClassLoader());
+        this.mCampaignSource = in.readParcelable(Object.class.getClassLoader());
         this.mCategoryId = (Long) in.readValue(Long.class.getClassLoader());
         this.mChatOptions = (Long) in.readValue(Long.class.getClassLoader());
         this.mCityId = in.readString();
@@ -596,6 +609,8 @@ public class Ad implements Parcelable {
         this.mPromotionSection = (Long) in.readValue(Long.class.getClassLoader());
         this.mRegionId = in.readString();
         this.mStatus = in.readString();
+        this.mSubtitle = new ArrayList<Object>();
+        in.readList(this.mSubtitle, Object.class.getClassLoader());
         this.mTitle = in.readString();
         this.mTopAd = (Long) in.readValue(Long.class.getClassLoader());
         this.mUrgent = (Long) in.readValue(Long.class.getClassLoader());
@@ -605,9 +620,10 @@ public class Ad implements Parcelable {
         this.mUserBusinessLogo = in.readString();
         this.mUserId = in.readString();
         this.mUserLabel = in.readString();
+        this.imageUrl = in.readString();
     }
 
-    public static final Parcelable.Creator<Ad> CREATOR = new Parcelable.Creator<Ad>() {
+    public static final Creator<Ad> CREATOR = new Creator<Ad>() {
         @Override
         public Ad createFromParcel(Parcel source) {
             return new Ad(source);

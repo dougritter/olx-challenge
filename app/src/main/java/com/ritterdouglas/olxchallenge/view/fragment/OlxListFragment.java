@@ -3,6 +3,7 @@ package com.ritterdouglas.olxchallenge.view.fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,11 @@ public class OlxListFragment extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentOlxListBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_olx_list, container, false);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (mSearchResponse != null) {
             OlxListAdapter adapter = new OlxListAdapter(mSearchResponse);
-//        mBinding.recyclerView.setAdapter(new OlxListAdapter(list));
+            mBinding.recyclerView.setAdapter(adapter);
 
         }
 

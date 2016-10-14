@@ -4,9 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.ritterdouglas.olxchallenge.databinding.FragmentOlxMapBinding;
+import com.ritterdouglas.olxchallenge.networking.ads_search.model.Ad;
 import com.ritterdouglas.olxchallenge.networking.ads_search.model.SearchResponse;
 import com.ritterdouglas.olxchallenge.view.fragment.OlxListFragment;
 import com.ritterdouglas.olxchallenge.view.fragment.OlxMapFragment;
+import com.ritterdouglas.olxchallenge.view_model.FragmentMapViewModel;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -20,6 +23,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(FragmentManager fm, SearchResponse searchResponse) {
         super(fm);
         this.mSearchResponse = searchResponse;
+        adjustImageUrls();
     }
 
     @Override public Fragment getItem(int position) {
@@ -38,7 +42,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return position == POSITION_LIST ? TITLE_LIST : TITLE_MAP;
     }
 
-    
+    public void adjustImageUrls() {
+        for (Ad item : mSearchResponse.getAds()) {
+            item.setImageUrl(FragmentMapViewModel.getUrlOfImage(item));
+        }
+    }
+
+
 
 
 

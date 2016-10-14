@@ -25,6 +25,9 @@
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/detailImage"
                 android:layout_width="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@{viewModel.imageUrl}"
                 android:layout_height="@dimen/card_height" />
 
             <View
@@ -51,8 +54,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/detailImage"
                 android:layout_margin="@dimen/card_default_margin"
+                android:layout_marginRight="@dimen/card_text_margin_of_price"
+                android:layout_marginEnd="@dimen/card_text_margin_of_price"
                 android:textColor="@android:color/background_dark"
                 android:textSize="@dimen/card_text_name_size"
+                android:textStyle="bold"
                 android:text="@{viewModel.title}"
                 tools:text="Item Title" />
 

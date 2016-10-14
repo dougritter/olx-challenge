@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.ritterdouglas.olxchallenge.R;
 import com.ritterdouglas.olxchallenge.databinding.CardItemBinding;
+import com.ritterdouglas.olxchallenge.databinding.ListCardItemBinding;
 import com.ritterdouglas.olxchallenge.networking.ads_search.model.Ad;
 import com.ritterdouglas.olxchallenge.networking.ads_search.model.SearchResponse;
 
@@ -16,16 +17,16 @@ public class OlxListAdapter extends RecyclerView.Adapter<OlxListAdapter.CustomVi
     private List<Ad> adsList;
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        private CardItemBinding mViewDataBinding;
+        private ListCardItemBinding mViewDataBinding;
 
-        public CustomViewHolder(CardItemBinding viewDataBinding) {
+        public CustomViewHolder(ListCardItemBinding viewDataBinding) {
             super(viewDataBinding.getRoot());
             mViewDataBinding = viewDataBinding;
             mViewDataBinding.executePendingBindings();
 
         }
 
-        public CardItemBinding getViewDataBinding() {
+        public ListCardItemBinding getViewDataBinding() {
             return mViewDataBinding;
         }
 
@@ -38,14 +39,13 @@ public class OlxListAdapter extends RecyclerView.Adapter<OlxListAdapter.CustomVi
     }
 
     @Override public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        CardItemBinding appItemBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.card_item, viewGroup, false);
+        ListCardItemBinding appItemBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.list_card_item, viewGroup, false);
         return new CustomViewHolder(appItemBinding);
     }
 
     @Override public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
-        CardItemBinding appItemBinding = customViewHolder.getViewDataBinding();
-//        appItemBinding.setViewModel(new AppItemViewModel(mDataset.get(i)));
-//        customViewHolder.itemView.setOnClickListener(v -> clickSubject.onNext(appItemBinding.getViewModel()));
+        ListCardItemBinding appItemBinding = customViewHolder.getViewDataBinding();
+        appItemBinding.setViewModel(adsList.get(i));
 
     }
 
