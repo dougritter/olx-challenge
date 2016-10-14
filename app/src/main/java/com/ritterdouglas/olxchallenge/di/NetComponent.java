@@ -1,5 +1,6 @@
 package com.ritterdouglas.olxchallenge.di;
 
+import com.ritterdouglas.olxchallenge.view.activity.MainActivity;
 import com.ritterdouglas.olxchallenge.view.activity.MapsActivity;
 
 import javax.inject.Singleton;
@@ -11,6 +12,7 @@ import dagger.Component;
 public interface NetComponent {
 
     void inject (MapsActivity mapsActivity);
+    void inject (MainActivity mainActivity);
 
 
 }

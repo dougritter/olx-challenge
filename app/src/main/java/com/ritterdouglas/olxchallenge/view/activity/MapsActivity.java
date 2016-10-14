@@ -117,23 +117,7 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
                         mDetailContainer.setVisibility(View.VISIBLE);
                     }
 
-                    /*
-                    {"riak_ring_urls":{
-                        "1":["https:\/\/img.olx.pt\/"],"2":["https:\/\/img.olx.pt\/"]
-                    },"riak_buckets":{
-                        "ad":"images_olxpt","shop":"images_shops_olxpt"
-                    },"riak_photo_pattern":"{riak_ring_url}{riak_bucket}\/{riak_key}_{slot_id}_{width}x{height}_rev{riak_rev}.jpg"}
-                    }
-                     */
-
-                    //https://img.olx.pt/images_olxpt/890574787_1_700x525_rev4.jpg
-
-                    String baseUrl = "https://img.olx.pt/images_olxpt/";
-                    String imageUrl = baseUrl + "/" +item.getPhotos().getRiakKey() + "_" + item.getPhotos().getRiakRing() + "_" +
-                            + item.getPhotos().getData().get(0).getW() + "x" + item.getPhotos().getData().get(0).getH()
-                            + "_rev" + item.getPhotos().getRiakRev() + ".jpg";
-
-                    Picasso.with(this).load(imageUrl).into(mDetailImage);
+                    Picasso.with(this).load(mViewModel.getUrlOfImage(item)).into(mDetailImage);
 
                     // mDetailImage
                     mDetailPrice.setText(item.getPriceNumeric());

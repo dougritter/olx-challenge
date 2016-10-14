@@ -1,6 +1,5 @@
 package com.ritterdouglas.olxchallenge.view_model;
 
-
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -13,12 +12,12 @@ import com.ritterdouglas.olxchallenge.networking.ads_search.model.SearchResponse
 import retrofit2.Response;
 import rx.subjects.AsyncSubject;
 
-public class MapsActivityViewModel {
+public class ActivityMainViewModel {
 
     private AsyncSubject<Response<SearchResponse>> searchSubject;
     private SearchManager searchManager;
 
-    public MapsActivityViewModel(SearchManager searchManager) {
+    public ActivityMainViewModel(SearchManager searchManager) {
         this.searchManager = searchManager;
         searchSubject = AsyncSubject.create();
     }
@@ -53,11 +52,11 @@ public class MapsActivityViewModel {
 
         try {
             imageUrl = NetworkingConstants.IMGS_BASE_URL
-            + "/" +ad.getPhotos().getRiakKey() + "_"
-            + ad.getPhotos().getRiakRing() + "_" +
-            + ad.getPhotos().getData().get(0).getW() + "x"
-            + ad.getPhotos().getData().get(0).getH()
-            + "_rev" + ad.getPhotos().getRiakRev() + ".jpg";
+                    + "/" +ad.getPhotos().getRiakKey() + "_"
+                    + ad.getPhotos().getRiakRing() + "_" +
+                    + ad.getPhotos().getData().get(0).getW() + "x"
+                    + ad.getPhotos().getData().get(0).getH()
+                    + "_rev" + ad.getPhotos().getRiakRev() + ".jpg";
 
         } catch (NullPointerException e) {
             Log.e(MapsActivityViewModel.class.getSimpleName(), e.getMessage());
