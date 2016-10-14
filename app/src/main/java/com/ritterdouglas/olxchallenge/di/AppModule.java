@@ -14,7 +14,6 @@ public class AppModule {
 
     public AppModule(Application application) {
         mApplication = application;
-
     }
 
     @Provides
