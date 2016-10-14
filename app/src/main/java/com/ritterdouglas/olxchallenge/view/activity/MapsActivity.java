@@ -20,6 +20,7 @@ import com.ritterdouglas.olxchallenge.networking.ads_search.SearchManager;
 import com.ritterdouglas.olxchallenge.networking.ads_search.model.Ad;
 import com.ritterdouglas.olxchallenge.networking.ads_search.model.SearchResponse;
 import com.ritterdouglas.olxchallenge.view_model.MapsActivityViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
     @Override public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(LISBON_LAT_LNT));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LISBON_LAT_LNT, 12.0f));
     }
 
     public void addMarkersOnTheMap(List<Ad> adsList) {
@@ -115,6 +116,24 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
                     if (mDetailContainer.getVisibility() != View.VISIBLE) {
                         mDetailContainer.setVisibility(View.VISIBLE);
                     }
+
+                    /*
+                    {"riak_ring_urls":{
+                        "1":["https:\/\/img.olx.pt\/"],"2":["https:\/\/img.olx.pt\/"]
+                    },"riak_buckets":{
+                        "ad":"images_olxpt","shop":"images_shops_olxpt"
+                    },"riak_photo_pattern":"{riak_ring_url}{riak_bucket}\/{riak_key}_{slot_id}_{width}x{height}_rev{riak_rev}.jpg"}
+                    }
+                     */
+
+                    //https://img.olx.pt/images_olxpt/890574787_1_700x525_rev4.jpg
+
+                    String baseUrl = "https://img.olx.pt/images_olxpt/";
+                    String imageUrl = baseUrl + "/" +item.getPhotos().getRiakKey() + "_" + item.getPhotos().getRiakRing() + "_" +
+                            + item.getPhotos().getData().get(0).getW() + "x" + item.getPhotos().getData().get(0).getH()
+                            + "_rev" + item.getPhotos().getRiakRev() + ".jpg";
+
+                    Picasso.with(this).load(imageUrl).into(mDetailImage);
 
                     // mDetailImage
                     mDetailPrice.setText(item.getPriceNumeric());
